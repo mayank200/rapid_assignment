@@ -1,0 +1,53 @@
+<section>
+
+    <div class="row">
+
+     <div class="col-md-7" style="width:65%">
+
+        <div class="container">
+            <h2> Employee Table </h2>
+            <ul class="responsive-table">
+              <li class="table-header">
+                    <div class="col col-1">S No.</div>
+                    <div class="col col-2">Name</div>
+                    <div class="col col-2">Start Time</div>
+                    <div class="col col-2">End Time</div>
+                    <div class="col col-2">Hours Worked</div>
+                    <div class="col col-3">Entry Note</div>
+              </li>
+
+              <li *ngFor="let tab of tableData | paginate:{itemsPerPage:limit,currentPage: p,totalItems:table_length}; let i = index"
+               class="table-row" [ngClass]="[tab.time_worked_minutes < 100 ? 'table-row-less' : 'table-row' ]">
+               
+
+                <div class="col col-1" data-label="row">{{ (p - 1) * limit + i +1 }}</div>
+                <div class="col col-2" data-label="name">{{tab.EmployeeName}}</div>
+                <div class="col col-2" data-label="start">{{tab.StarTimeUtc}}</div>
+                <div class="col col-2" data-label="end">{{tab.EndTimeUtc}}</div>
+                <div class="col col-2" data-label="time">{{tab.time_worked_hours | float2}}</div>
+              <div class="col col-3" data-label="note">{{tab.EntryNotes}}</div>
+               
+              </li>
+             
+            </ul>
+
+            <div *ngIf="tableData.length>0">
+                <pagination-controls (pageChange)="getPage($event)" maxSize="10" directionLinks="true"
+                    autoHide="true" responsive="true" previousLabel="" nextLabel=""
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page"></pagination-controls>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div style="display: block">
+            <canvas baseChart 
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    chartType='pie'></canvas>
+          </div>
+        </div>
+
+    </div>
+</section>
