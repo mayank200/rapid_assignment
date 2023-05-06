@@ -23,13 +23,14 @@ export class DashboardComponent implements OnInit {
   p:any=1;
   limit:any=10;
 
-  pieChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
-  pieChartData = [120, 150, 180, 90];
+  pieChartLabels = [];
+  pieChartData = [];
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
     legend: {
-            display: false     }
+            // display: false;
+               }
   };
   public pieChartPlugins = [
     {
@@ -40,6 +41,7 @@ export class DashboardComponent implements OnInit {
       }
     }
   ];
+  activechart: any= 'c';
 
   constructor(private http:HttpClient) { }
 
@@ -74,16 +76,18 @@ this.total_hours += el['time_worked_hours'];
 this.pieChartLabels =[];
 this.pieChartData = [];
 
-      this.tableData.map((el:any)=>{
+      this.tableData.map((el:any,i:any)=>{
 
-        this.pieChartLabels.push(el['EmployeeName']);
 
         el['per_worked'] = (el['time_worked_hours'] / this.total_hours) * 100;
 
-        this.pieChartData.push(el['per_worked']);
-      });
+        if(i>=((this.p-1)*10) && i<((this.p)*10)){
 
-      console.log(this.total_hours,this.tableData);
+          this.pieChartLabels.push(el['EmployeeName']);
+
+          this.pieChartData.push(el['per_worked']);
+        }
+      });
     });
   }
 
@@ -94,6 +98,61 @@ this.pieChartData = [];
   getPage(pageNo: number) {
     this.p = pageNo;
 
+
+    this.pieChartLabels =[];
+this.pieChartData = [];
+
+      this.tableData.map((el:any,i:any)=>{
+
+
+        el['per_worked'] = (el['time_worked_hours'] / this.total_hours) * 100;
+
+        if(i>=((this.p-1)*10) && i<((this.p)*10)){
+
+          this.pieChartLabels.push(el['EmployeeName']);
+
+          this.pieChartData.push(el['per_worked']);
+        }
+      });
+
+  }
+
+
+  changegraph(type:any){
+    this.pieChartLabels =[];
+    this.pieChartData = [];
+
+
+    if(type == 'c'){
+
+      this.activechart = 'c';
+      this.pieChartOptions = {
+        responsive: true,
+        legend: { display: true }
+      };
+    this.tableData.map((el:any,i:any)=>{
+      if(i>=((this.p-1)*10) && i<((this.p)*10)){
+
+        this.pieChartLabels.push(el['EmployeeName']);
+
+        this.pieChartData.push(el['per_worked']);
+      }
+    })
+    } else if(type == 'a') {
+
+      this.activechart = 'a';
+
+      this.pieChartOptions = {
+        responsive: true,
+        legend: { display: false }
+      };
+
+      this.tableData.map((el:any,i:any)=>{
+          this.pieChartLabels.push(el['EmployeeName']);
+
+          this.pieChartData.push(el['per_worked']);
+      })
+    }
   }
 
 }
