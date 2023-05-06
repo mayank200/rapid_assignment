@@ -7,8 +7,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule,HTTP_INTERCEPTORS  } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { FloatTwoPipePipe } from './float-two-pipe.pipe'
-import { NgChartsModule } from 'ng2-charts';
+import { FloatTwoPipePipe } from './float-two-pipe.pipe';
+import { DatePipePipe } from './date-pipe.pipe';
+import { ChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 // import { httpInterceptor } from './shared/interceptors/httpInterceptor';
 
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     DashboardComponent,
-    FloatTwoPipePipe
+    FloatTwoPipePipe,
+    DatePipePipe
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,7 @@ import { FormsModule } from '@angular/forms';
     NgxPaginationModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgChartsModule
+    ChartsModule
   ],
   providers: [
     // {provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true}

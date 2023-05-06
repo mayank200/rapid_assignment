@@ -23,16 +23,29 @@ export class DashboardComponent implements OnInit {
   p:any=1;
   limit:any=10;
 
-  public pieChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
-  public pieChartData = [120, 150, 180, 90];
-  public pieChartType = 'pie';
+  pieChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
+  pieChartData = [120, 150, 180, 90];
 
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+    legend: {
+            display: false     }
+  };
+  public pieChartPlugins = [
+    {
+      beforeInit: function(chart, options) {
+        chart.legend.afterFit = function() {
+          this.height += 50;
+        };
+      }
+    }
+  ];
 
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
 
-    
+
 
     this.getTable();
   }
@@ -45,7 +58,7 @@ export class DashboardComponent implements OnInit {
     ).subscribe((resData:any)=>{
 
       this.tableData = resData;
-      
+
       this.table_length = resData.length;
       this.total_hours = 0;
 
@@ -58,12 +71,16 @@ this.total_hours += el['time_worked_hours'];
 
       })
 
-   
+this.pieChartLabels =[];
+this.pieChartData = [];
 
       this.tableData.map((el:any)=>{
 
+        this.pieChartLabels.push(el['EmployeeName']);
+
         el['per_worked'] = (el['time_worked_hours'] / this.total_hours) * 100;
 
+        this.pieChartData.push(el['per_worked']);
       });
 
       console.log(this.total_hours,this.tableData);
@@ -76,7 +93,7 @@ this.total_hours += el['time_worked_hours'];
 
   getPage(pageNo: number) {
     this.p = pageNo;
-  
+
   }
 
 }
