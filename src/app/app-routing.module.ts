@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   pathMatch: 'full',
-  //   redirectTo: 'dashboard'
-  // },
-  // { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'rapid_assignment/',
+    pathMatch: 'full',
+    redirectTo: ''
+  },
+  { path: '', component: AppComponent },
 ];
 
 @NgModule({
