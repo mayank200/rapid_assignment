@@ -25,6 +25,12 @@ export class DashboardComponent implements OnInit {
 
   pieChartLabels = [];
   pieChartData = [];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Access-Control-Allow-Origin': 'http://yourappdomain.com'
+    })
+  };
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -54,7 +60,7 @@ export class DashboardComponent implements OnInit {
 
 
   getTable(){
-    this.http.get('https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==').pipe(
+    this.http.get('https://rc-vault-fap-live-1.azurewebsites.net/api/gettimeentries?code=vO17RnE8vuzXzPJo5eaLLjXjmRW07law99QTD90zat9FfOQJKKUcgQ==',this.httpOptions).pipe(
       retry(1),
       catchError(this.errorHandler)
     ).subscribe((resData:any)=>{
